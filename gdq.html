@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
+  </head>
+  <body>
+    <div id="graph"></div>
+    <script type="text/javascript">
+      function showGraph(data) {
+        $('#graph').highcharts({
+            type: 'spline',
+            title: {
+                text: 'Games Done Quick Donations',
+                x: -20 //center
+            },
+            tooltip: {
+              pointFormat: "${point.y:.2f}"
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: data
+        });
+      }
+      $(function () {
+         $.ajax({
+          url: '/data.json',
+          type: 'GET',
+          async: true,
+          dataType: "json",
+          success: function (data) {
+              showGraph(data);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
